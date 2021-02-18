@@ -9,9 +9,3 @@
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
-
-globalVariables(
-  c(
-    "primary", "secondary"
-  )
-)

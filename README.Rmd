@@ -22,3 +22,47 @@ Install the unstable development version of the package with:
 ```{r, eval = FALSE}
 remotes::install_github("epiforecasts/covid19.track.severity")
 ```
+
+
+## Proof of concept
+
+* Packages
+
+```{r}
+# Packages ----------------------------------------------------------------
+library(covid19.track.severity)
+library(idbrms)
+library(brms)
+library(dplyr)
+library(purrr)
+```
+
+* Load data
+
+```{r}
+obs <- get_uk_obs_grid(date_from = Sys.Date() - 4 * 7 * 12, 
+                       date_to = Sys.Date()) %>% 
+  filter(level %in% "DA") 
+# set number of parallel cores
+options(mc.cores = 4)
+```
+
+* Prepare for modelling
+
+```{r}
+obs <- obs %>% 
+  mutate(data = map(data, prepare, model = "convolution", max_convolution = 20))
+```
+
+* Model
+
+```{r} 
+fit <- idbrm(data = obs$data[[1]],
+             family = negbinomial(link = "identity"),
+             formula = id_formula(obs$data[[1]],
+                                  scale = ~ 1 + (1 | location),
+                                  cmean = ~ 1,
+                                  clsd = ~ 1),
+             priors = id_priors(obs$data[[1]],
+                                scale = c(log(0.02), 1)))
+```

@@ -7,8 +7,9 @@
 get_uk_notificiatons(
   from = c("cases", "admissions", "deaths"),
   to = c("cases", "admissions", "deaths"),
-  level = c("utla", "NHS region", "DA"),
-  date_from
+  level = c("UTLA", "NHS region", "DA"),
+  date_from,
+  date_to
 )
 }
 \arguments{
@@ -16,9 +17,12 @@ get_uk_notificiatons(
 
 \item{to}{"cases", "admissions" or "deaths"}
 
-\item{level}{Aggregation level of the data}
+\item{level}{Aggregation level of the data. Options are devolved authority
+(DA), NHS region, and upper-tier local authority (UTLA).}
 
 \item{date_from}{Date to filter from}
+
+\item{date_to}{Date to filter to}
 }
 \value{
 A data frame containing primary and secondary notifications alongside

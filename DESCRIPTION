@@ -26,12 +26,16 @@ Imports:
     dplyr,
     tidyr,
     lubridate,
-    data.table
+    purrr
 Suggests: 
-    here,
     knitr,
     spelling,
     usethis,
     rmarkdown,
-    covr
+    covr,
+    here,
+    idbrms,
+    brms
+Remotes:
+    epiforecasts/idbrms
 VignetteBuilder: knitr
