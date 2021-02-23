@@ -60,9 +60,24 @@ obs <- obs %>%
 fit <- idbrm(data = obs$data[[1]],
              family = negbinomial(link = "identity"),
              formula = id_formula(obs$data[[1]],
-                                  scale = ~ 1 + (1 | location),
-                                  cmean = ~ 1,
-                                  clsd = ~ 1),
+                                  scale = ~ (time | location),
+                                  cmean =  ~ (1 | location),
+                                  lcsd =  ~ (1 | location)),
              priors = id_priors(obs$data[[1]],
-                                scale = c(log(0.02), 1)))
+                                scale = c(log(0.05), 1),
+                                cmean = c(log(5), 0.25),
+                                lcsd = c(log(0.5), 0.25)))
+```
+
+
+* Summarise model
+
+```{r}
+summary(fit)
+```
+
+* Random effects 
+
+```{r}
+ranef(fit)
 ```
