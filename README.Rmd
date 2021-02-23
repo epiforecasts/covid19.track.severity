@@ -51,7 +51,7 @@ options(mc.cores = 4)
 
 ```{r}
 obs <- obs %>% 
-  mutate(data = map(data, prepare, model = "convolution", max_convolution = 20))
+  mutate(data = map(data, prepare, model = "convolution", max_convolution = 15))
 ```
 
 * Model
@@ -60,7 +60,7 @@ obs <- obs %>%
 fit <- idbrm(data = obs$data[[1]],
              family = negbinomial(link = "identity"),
              formula = id_formula(obs$data[[1]],
-                                  scale = ~ (time | location),
+                                  scale = ~ time*location,
                                   cmean =  ~ (1 | location),
                                   lcsd =  ~ (1 | location)),
              priors = id_priors(obs$data[[1]],
