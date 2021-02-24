@@ -71,11 +71,11 @@ obs <- obs %>%
 
 ``` r
 fit <- idbrm(data = obs$data[[1]],
-             family = poisson(link = "identity"),
+             family = negbinomial(link = "identity"),
              formula = id_formula(obs$data[[1]],
-                                  scale = ~ (time | location),
-                                  cmean =  ~ 1,
-                                  lcsd =  ~ 1),
+                                  scale = ~ time*location,
+                                  cmean =  ~ (1 | location),
+                                  lcsd =  ~ (1 | location)),
              priors = id_priors(obs$data[[1]],
                                 scale = c(log(0.05), 1),
                                 cmean = c(log(5), 0.25),
@@ -88,22 +88,15 @@ fit <- idbrm(data = obs$data[[1]],
 #> model as all related coefficients have individual priors already. If you did not
 #> set those priors yourself, then maybe brms has assigned default priors. See ?
 #> set_prior and ?get_prior for more details.
-
-#> Warning: The global prior 'normal(0, 0.5)' of class 'b' will not be used in the
-#> model as all related coefficients have individual priors already. If you did not
-#> set those priors yourself, then maybe brms has assigned default priors. See ?
-#> set_prior and ?get_prior for more details.
 #> Compiling Stan program...
 #> Start sampling
-#> Warning: There were 103 divergent transitions after warmup. See
+#> Warning: There were 795 divergent transitions after warmup. See
 #> http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
 #> to find out why this is a problem and how to eliminate them.
-#> Warning: There were 1522 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 10. See
+#> Warning: There were 990 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 10. See
 #> http://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
-#> Warning: There were 1 chains where the estimated Bayesian Fraction of Missing Information was low. See
-#> http://mc-stan.org/misc/warnings.html#bfmi-low
 #> Warning: Examine the pairs() plot to diagnose sampling problems
-#> Warning: The largest R-hat is 1.07, indicating chains have not mixed.
+#> Warning: The largest R-hat is 1.92, indicating chains have not mixed.
 #> Running the chains for more iterations may help. See
 #> http://mc-stan.org/misc/warnings.html#r-hat
 #> Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
@@ -123,35 +116,52 @@ summary(fit)
 #> Warning: Parts of the model have not converged (some Rhats are > 1.05). Be
 #> careful when analysing the results! We recommend running more iterations and/or
 #> setting stronger priors.
-#> Warning: There were 103 divergent transitions after warmup. Increasing
+#> Warning: There were 795 divergent transitions after warmup. Increasing
 #> adapt_delta above 0.8 may help. See http://mc-stan.org/misc/
 #> warnings.html#divergent-transitions-after-warmup
-#>  Family: poisson 
-#>   Links: mu = identity 
+#>  Family: negbinomial 
+#>   Links: mu = identity; shape = identity 
 #> Formula: secondary ~ idbrms_convolve(primary, scale, cmean, lcsd, cmax, index, cstart, init_obs) 
-#>          scale ~ (time | location)
-#>          cmean ~ 1
-#>          lcsd ~ 1
+#>          scale ~ time * location
+#>          cmean ~ (1 | location)
+#>          lcsd ~ (1 | location)
 #>    Data: data (Number of observations: 452) 
 #> Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 #>          total post-warmup samples = 4000
 #> 
 #> Group-Level Effects: 
 #> ~location (Number of levels: 4) 
-#>                                 Estimate Est.Error l-95% CI u-95% CI Rhat
-#> sd(scale_Intercept)                 1.49      0.81     0.60     3.73 1.02
-#> sd(scale_time)                      0.01      0.01     0.01     0.03 1.02
-#> cor(scale_Intercept,scale_time)    -0.87      0.24    -1.00    -0.07 1.03
-#>                                 Bulk_ESS Tail_ESS
-#> sd(scale_Intercept)                  193      363
-#> sd(scale_time)                       242      441
-#> cor(scale_Intercept,scale_time)      133       95
+#>                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+#> sd(cmean_Intercept)    36.58     28.99     6.39   117.01 1.07      160      186
+#> sd(lcsd_Intercept)      6.11      3.52     1.68    13.07 1.22       14       64
 #> 
 #> Population-Level Effects: 
-#>                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-#> scale_Intercept    -3.51      0.33    -4.23    -2.80 1.01      158      359
-#> cmean_Intercept     4.21      0.34     3.84     4.57 1.07       56       31
-#> lcsd_Intercept      0.80      0.04     0.74     0.85 1.06       71       31
+#>                                    Estimate Est.Error l-95% CI u-95% CI Rhat
+#> scale_Intercept                       -3.86      0.06    -3.99    -3.75 1.20
+#> scale_time                             0.00      0.00     0.00     0.01 1.18
+#> scale_locationNorthernIreland         -0.35      0.14    -0.61    -0.06 1.53
+#> scale_locationScotland                 0.47      0.10     0.29     0.68 1.12
+#> scale_locationWales                    0.11      0.10    -0.09     0.31 1.21
+#> scale_time:locationNorthernIreland     0.00      0.00    -0.00     0.00 1.34
+#> scale_time:locationScotland           -0.00      0.00    -0.01    -0.00 1.11
+#> scale_time:locationWales              -0.00      0.00    -0.01    -0.00 1.19
+#> cmean_Intercept                        1.63      0.23     1.18     2.04 1.03
+#> lcsd_Intercept                        -0.64      0.25    -1.16    -0.19 1.10
+#>                                    Bulk_ESS Tail_ESS
+#> scale_Intercept                          14      188
+#> scale_time                               15      204
+#> scale_locationNorthernIreland             7       30
+#> scale_locationScotland                   24      233
+#> scale_locationWales                      14      127
+#> scale_time:locationNorthernIreland        9       36
+#> scale_time:locationScotland              25      330
+#> scale_time:locationWales                 15      129
+#> cmean_Intercept                         138      907
+#> lcsd_Intercept                           26      195
+#> 
+#> Family Specific Parameters: 
+#>       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+#> shape    12.23      1.00    10.38    14.56 1.07       79      746
 #> 
 #> Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 #> and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -165,19 +175,19 @@ summary(fit)
 ``` r
 ranef(fit)
 #> $location
-#> , , scale_Intercept
+#> , , cmean_Intercept
 #> 
-#>                     Estimate Est.Error      Q2.5      Q97.5
-#> England          -0.47984315 0.3329862 -1.191670  0.2459475
-#> Northern Ireland -1.92984717 0.3356053 -2.643787 -1.1931039
-#> Scotland          0.04918841 0.3335770 -0.649727  0.7935367
-#> Wales            -0.56955616 0.3376644 -1.281036  0.1730682
+#>                   Estimate Est.Error        Q2.5     Q97.5
+#> England           30.93680  28.72227    3.066667 106.09142
+#> Northern Ireland -16.23846  39.73027 -120.081999  47.46465
+#> Scotland          34.89743  40.37004    2.189062 142.41272
+#> Wales             28.71092  26.47147    1.742296  96.00177
 #> 
-#> , , scale_time
+#> , , lcsd_Intercept
 #> 
-#>                      Estimate    Est.Error          Q2.5       Q97.5
-#> England          0.0045259014 0.0003163115  0.0041734523 0.004888939
-#> Northern Ireland 0.0179898614 0.0008986803  0.0163570630 0.019587284
-#> Scotland         0.0004113214 0.0005680096 -0.0006636893 0.001533194
-#> Wales            0.0049510168 0.0007366337  0.0035914081 0.006406404
+#>                  Estimate  Est.Error       Q2.5     Q97.5
+#> England          2.665139  0.4738968  1.6803864  3.534606
+#> Northern Ireland 4.387238 11.1901060 -8.7126936 37.037140
+#> Scotland         2.329757  0.5518073  1.2217768  3.408673
+#> Wales            1.317785  0.6385782 -0.1467899  2.329896
 ```
