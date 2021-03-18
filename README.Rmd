@@ -40,9 +40,11 @@ library(purrr)
 * Load data
 
 ```{r}
-obs <- get_uk_obs_grid(date_from = Sys.Date() - 4 * 7 * 12, 
-                       date_to = Sys.Date()) %>% 
-  filter(level %in% "DA") 
+obs <- get_uk_obs_grid(
+  date_from = Sys.Date() - 7 * 16,
+  date_to = Sys.Date()
+) %>%
+  filter(level %in% "DA")
 # set number of parallel cores
 options(mc.cores = 4)
 ```
@@ -50,23 +52,27 @@ options(mc.cores = 4)
 * Prepare for modelling
 
 ```{r}
-obs <- obs %>% 
+obs <- obs %>%
   mutate(data = map(data, prepare, model = "convolution", max_convolution = 15))
 ```
 
 * Model
 
 ```{r} 
-fit <- idbrm(data = obs$data[[1]],
-             family = negbinomial(link = "identity"),
-             formula = id_formula(obs$data[[1]],
-                                  scale = ~ time*location,
-                                  cmean =  ~ (1 | location),
-                                  lcsd =  ~ (1 | location)),
-             priors = id_priors(obs$data[[1]],
-                                scale = c(log(0.05), 1),
-                                cmean = c(log(5), 0.25),
-                                lcsd = c(log(0.5), 0.25)))
+fit <- idbrm(
+  data = obs$data[[1]][location %in% "England"],
+  family = poisson(link = "identity"),
+  formula = id_formula(obs$data[[1]],
+    scale = ~ s(time),
+    cmean = ~1,
+    lcsd = ~1
+  ),
+  priors = id_priors(obs$data[[1]],
+    scale = c(log(0.05), 1),
+    cmean = c(log(5), 0.25),
+    lcsd = c(log(0.5), 0.25)
+  )
+)
 ```
 
 
@@ -74,10 +80,4 @@ fit <- idbrm(data = obs$data[[1]],
 
 ```{r}
 summary(fit)
-```
-
-* Random effects 
-
-```{r}
-ranef(fit)
 ```

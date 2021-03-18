@@ -14,9 +14,11 @@ idbrms
 io
 knitr
 LazyData
+Lifecycle
 lshtm
 lubridate
 magrittr
+modelling
 NHS
 ORCID
 precommit
@@ -28,6 +30,7 @@ RoxygenNote
 sam
 sebastian
 SGTF
+Summarise
 tibble
 tidyr
 uk

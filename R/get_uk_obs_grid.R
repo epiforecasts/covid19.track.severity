@@ -35,7 +35,7 @@ get_uk_obs_grid <- function(date_from, date_to) {
     unnest(cols = "ratios") %>%
     mutate(data = map2(
       .data$level, .data$obs_pairs,
-      ~ get_uk_notificiatons(.y[1], .y[2],
+      ~ get_uk_notifications(.y[1], .y[2],
         level = .x,
         date_from = date_from,
         date_to = date_to
