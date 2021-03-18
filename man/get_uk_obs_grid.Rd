@@ -7,6 +7,11 @@ spatial scale}
 \usage{
 get_uk_obs_grid(date_from, date_to)
 }
+\arguments{
+\item{date_from}{Date to filter from}
+
+\item{date_to}{Date to filter to}
+}
 \value{
 A nested tibble containing paired observation data for each spatial
 level and severity measure of interest.
