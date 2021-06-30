@@ -20,30 +20,26 @@ BugReports: https://github.com/epiforecasts/covid19.track.severity/issues
 Depends:
     R (>= 2.10)
 Imports:
-    dplyr,
-    lubridate,
-    magrittr,
+    data.table,
     purrr,
-    rlang,
-    tibble,
-    tidyr,
-    vroom
+    EpiNow2
 Suggests: 
-    brms,
+    targets,
     covr,
     here,
-    idbrms,
     knitr,
     precommit,
     rmarkdown,
     spelling,
-    usethis
+    usethis,
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Remotes:
-    epiforecasts/idbrms
+    epiforecasts/EpiNow2@time-varying-secondary
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Config/testthat/edition: 3
