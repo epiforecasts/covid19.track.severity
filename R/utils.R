@@ -12,5 +12,4 @@ NULL
 
 
 #' @import data.table
-#'
 NULL

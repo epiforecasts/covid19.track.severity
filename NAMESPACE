@@ -2,4 +2,7 @@
 
 export("%>%")
 import(data.table)
+importFrom(data.table,":=")
+importFrom(data.table,.SD)
 importFrom(magrittr,"%>%")
+importFrom(purrr,map)
