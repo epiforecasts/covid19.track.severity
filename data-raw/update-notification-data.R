@@ -1,7 +1,8 @@
 ## code to prepare `DATASET` dataset goes here
+cases <- readRDS("data-raw/test_positive_cases.rds")
 admissions <- readRDS("data-raw/hospital_admissions.rds")
-beds <- readRDS("data-raw/hospital_beds.rds")
-ico <- readRDS("data-raw/icu_beds.rds")
+occupancy <- readRDS("data-raw/hospital_beds.rds")
+icu <- readRDS("data-raw/icu_beds.rds")
 deaths <- readRDS("data-raw/linelist_deaths.rds")
 
 
