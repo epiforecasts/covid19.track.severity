@@ -1,6 +1,15 @@
-
-# summarise simulated scenarios
-summarise_scenario <- function(hosp, window = 1, dates) {
+#' FUNCTION_TITLE
+#'
+#' FUNCTION_DESCRIPTION
+#'
+#' @param hosp DESCRIPTION.
+#' @param window DESCRIPTION.
+#' @param dates DESCRIPTION.
+#'
+#' @return RETURN_DESCRIPTION
+#' @examples
+#' # ADD_EXAMPLES_HERE
+summary.convolution_simulation <- function(hosp, window = 1, dates) {
   summarised_scenarios <- copy(hosp)[, .(date, scaling, meanlog, sdlog)]
   summarised_scenarios <- melt(summarised_scenarios, id.vars = "date")
   cris <- function(index, window, x) {
@@ -21,20 +30,4 @@ summarise_scenario <- function(hosp, window = 1, dates) {
 
   setnames(summarised_scenarios, "date", "target_date")
   return(summarised_scenarios)
-}
-
-# join multiple simulations together
-join_simulations <- function(simulations, labels, to_week = FALSE) {
-  simulations <- map2(simulations, labels, ~ .x[, target := .y])
-  simulations <- rbindlist(simulations, fill = TRUE, use.names = TRUE)
-
-  if (to_week) {
-    simulations <- simulations[,
-      date := floor_date(date, "week", week_start = 1)]
-    simulations <- simulations[, lapply(.SD, sum),
-                                by = c("date", "target"),
-                                .SDcols = c("secondary"), ]
-  }
-  simulations <- simulations[, target : as.factor(target)]
-  return(simulations)
 }

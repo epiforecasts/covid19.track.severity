@@ -1,3 +1,19 @@
+#' FUNCTION_TITLE
+#'
+#' FUNCTION_DESCRIPTION
+#'
+#' @param dt DESCRIPTION.
+#' @param variable DESCRIPTION.
+#' @param label DESCRIPTION.
+#' @param by DESCRIPTION.
+#' @param fill DESCRIPTION.
+#' @param shift_col DESCRIPTION.
+#' @param exact_cols DESCRIPTION.
+#' @param partial_cols DESCRIPTION.
+#'
+#' @return RETURN_DESCRIPTION
+#' @examples
+#' # ADD_EXAMPLES_HERE
 add_diff_variable <- function(dt, variable, label, by, fill = 0,
                               shift_col = "value",
                               exact_cols = c("median", "mean", "secondary",

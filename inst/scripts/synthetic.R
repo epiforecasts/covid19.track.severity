@@ -16,11 +16,6 @@ library(patchwork, quietly = TRUE, warn.conflicts = FALSE)
 # set number of cores to use
 options(mc.cores = 4)
 
-# load simulation function and iterator
-source(here("regional-secondary/simulate-secondary.R"))
-source(here("regional-secondary/secondary-posterior.R"))
-source(here("regional-secondary/regional-secondary.R"))
-
 # load hospital admissions
 hosp <- setDT(readRDS(here("data/hospital_admissions.rds")))
 

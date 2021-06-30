@@ -1,3 +1,19 @@
+#' FUNCTION_TITLE
+#'
+#' FUNCTION_DESCRIPTION
+#'
+#' @param draws DESCRIPTION.
+#' @param data DESCRIPTION.
+#' @param samples DESCRIPTION.
+#' @param alpha DESCRIPTION.
+#' @param obs_alpha DESCRIPTION.
+#' @param scale DESCRIPTION.
+#' @param x_axis DESCRIPTION.
+#' @param scale_label DESCRIPTION.
+#'
+#' @return RETURN_DESCRIPTION
+#' @examples
+#' # ADD_EXAMPLES_HERE
 plot_trace <- function(draws, data = NULL,
                        samples = 100,
                        alpha = 0.01, obs_alpha = 0.8,
