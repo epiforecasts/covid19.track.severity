@@ -20,19 +20,12 @@ BugReports: https://github.com/epiforecasts/covid19.track.severity/issues
 Depends:
     R (>= 2.10)
 Imports:
-    dplyr,
-    lubridate,
-    magrittr,
+    data.table,
     purrr,
-    rlang,
-    tibble,
-    tidyr,
-    vroom
+    EpiNow2
 Suggests: 
-    brms,
     covr,
     here,
-    idbrms,
     knitr,
     precommit,
     rmarkdown,
@@ -41,7 +34,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
-    epiforecasts/idbrms
+    epiforecasts/EpiNow2@time-varying-secondary
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
