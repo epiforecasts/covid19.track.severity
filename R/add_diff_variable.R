@@ -24,7 +24,7 @@
 #' @examples
 #' dt <- data.frame(target = "test", var = 1:100, var2 = c(1, 2),
 #'                  strat = c("a", "b"))
-#' add_diff_variable(dt, "test", "new", vars = "var", shift_col = "var2",
+#' add_diff_variable(dt, "test", "new", vars = "var", shift_var = "var2",
 #'                   by = "strat")
 add_diff_variable <- function(dt, variable, label, by, shift_var = "value",
                               vars = c("median", "mean", "secondary", "value"),
