@@ -56,6 +56,6 @@ defined) by another variable for a specified lag and stratification.
 \examples{
 dt <- data.frame(target = "test", var = 1:100, var2 = c(1, 2),
                  strat = c("a", "b"))
-add_diff_variable(dt, "test", "new", vars = "var", shift_col = "var2",
+add_diff_variable(dt, "test", "new", vars = "var", shift_var = "var2",
                   by = "strat")
 }
