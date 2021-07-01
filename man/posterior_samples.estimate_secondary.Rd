@@ -22,17 +22,12 @@ Posterior samples from estimate_secondary
 \dontrun{
 # load packages used
 library(EpiNow2)
-library(data.table)
 
 # set cores
 options(mc.cores = ifelse(interactive(), 4 ,1))
 
-# extract just data in the UK for cases and deaths
-obs <- uk_notifications
-obs <- obs[region \%in\% "England"]
-obs <- obs[date >= "2020-09-01"][date < "2021-06-01"]
-obs <- obs[, `:=`(primary = cases, secondary = deaths)]
-fit <- estimate_secondary(reports = obs, chains = 2,
+# fit using just data in the UK for cases and deaths
+fit <- estimate_secondary(reports = example_obs, chains = 2,
                           obs = obs_opts(scale = list(mean = 0.2, sd = 0.2)))
 
 posterior_samples(fit)
