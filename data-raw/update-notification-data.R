@@ -1,12 +1,23 @@
-## code to prepare `DATASET` dataset goes here
-cases <- readRDS("data-raw/test_positive_cases.rds")
-admissions <- readRDS("data-raw/hospital_admissions.rds")
-occupancy <- readRDS("data-raw/hospital_beds.rds")
-icu <- readRDS("data-raw/icu_beds.rds")
-deaths <- readRDS("data-raw/linelist_deaths.rds")
+library(data.table)
+library(purrr)
+
+# load data
+cases <- setDT(readRDS("data-raw/test_positive_cases.rds"))
+admissions <- setDT(readRDS("data-raw/hospital_admissions.rds"))
+occupancy <- setDT(readRDS("data-raw/hospital_beds.rds"))
+icu <- setDT(readRDS("data-raw/icu_beds.rds"))
+deaths <- setDT(readRDS("data-raw/linelist_deaths.rds"))
+
+# clean up naming
+setnames(admissions, "cases", "admissions")
+setnames(occupancy, "beds", "hospital_occupancy")
+setnames(icu, "beds", "icu_occupancy")
 
 
-usethis::use_data(admissions, overwrite = TRUE)
-usethis::use_data(cases, overwrite = TRUE)
-usethis::use_data(occupancy, overwrite = TRUE)
-usethis::use_data(icu, overwrite = TRUE)
+uk_notifications <- list(cases, admissions, occupancy, icu, deaths)
+
+uk_notifications <- reduce(uk_notifications, merge, all = TRUE, 
+                           by = c("date", "region")
+)
+
+usethis::use_data(uk_notifications, overwrite = TRUE)

@@ -36,4 +36,5 @@ RUN apt-get update \
      && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends libglpk-dev libv8-dev
 
-RUN Rscript -e "devtools::install_dev_deps()"
+COPY DESCRIPTION /tmp/package/
+RUN Rscript -e "devtools::install_dev_deps('/tmp/package/')"
