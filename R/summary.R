@@ -2,15 +2,15 @@
 #'
 #' FUNCTION_DESCRIPTION
 #'
-#' @param hosp DESCRIPTION.
+#' @param object DESCRIPTION.
 #' @param window DESCRIPTION.
 #' @param dates DESCRIPTION.
-#'
+#' @method summary convolution_simulation
 #' @return RETURN_DESCRIPTION
 #' @examples
 #' # ADD_EXAMPLES_HERE
-summary.convolution_simulation <- function(hosp, window = 1, dates) {
-  summarised_scenarios <- copy(hosp)[, .(date, scaling, meanlog, sdlog)]
+summary.convolution_simulation <- function(object, window = 1, dates) {
+  summarised_scenarios <- copy(object)[, .(date, scaling, meanlog, sdlog)]
   summarised_scenarios <- melt(summarised_scenarios, id.vars = "date")
   cris <- function(index, window, x) {
     x <- data.table(value = x[max(1, index - window + 1):index], type = "temp")

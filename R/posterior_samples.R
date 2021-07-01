@@ -5,6 +5,7 @@
 #' @return Returns a data frame of posterior samples for time-varying parameters.
 #' @importFrom purrr map2
 #' @importFrom rstan extract
+#' @method posterior_samples estimate_secondary
 #' @examples
 #' \dontrun{
 #' # load packages used

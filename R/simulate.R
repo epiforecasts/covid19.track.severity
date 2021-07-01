@@ -2,21 +2,21 @@
 #'
 #' FUNCTION_DESCRIPTION
 #'
-#' @param data DESCRIPTION.
+#' @param object DESCRIPTION.
 #' @param type DESCRIPTION.
 #' @param obs_model DESCRIPTION.
 #' @param delay_max DESCRIPTION.
 #' @param ... DESCRIPTION.
-#'
+#' @method simulate convolution_scenario
 #' @return RETURN_DESCRIPTION
 #' @examples
 #' # ADD_EXAMPLES_HERE
-simulate.convolution_secenario <- function(data, type = "incidence",
-                                           obs_model = "poisson",
-                                           delay_max = 30, ...) {
+simulate.convolution_scenario <- function(object, type = "incidence",
+                                          obs_model = "poisson",
+                                          delay_max = 30, ...) {
   type <- match.arg(type, choices = c("incidence", "prevalence"))
   obs_model <- match.arg(obs_model, choices = c("none", "poisson", "negbin"))
-  data <- as.data.table(data)
+  data <- as.data.table(object)
   data <- copy(data)
   data <- data[, index := 1:.N]
   # apply scaling

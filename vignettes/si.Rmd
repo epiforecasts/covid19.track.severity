@@ -1,0 +1,25 @@
+
+title: "Supplementary Information: Real-time estimates of the relationship between cases, hospitalisations, deaths, hospital bed usage, and ICU bed usage of Covid-19"
+subtitle: "Work in progress - not peer reviewed"
+author: Sam Abbott, Sebastian Funk on behalf of the CMMID Covid-19 Working Group
+bibliography: library.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-numeric-superscript-brackets.csl
+header-includes:
+   - \usepackage{float}
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: true
+
+---
+
+```{r setup, echo = FALSE, cache = FALSE, include = FALSE}
+library(here)
+library(data.table)
+library(knitr)
+library(here)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, eval = FALSE)
+```
+

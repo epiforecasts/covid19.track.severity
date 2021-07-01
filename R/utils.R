@@ -14,3 +14,8 @@ NULL
 #' @import data.table
 #' @import ggplot2
 NULL
+
+linear <- function(baseline, scale, time) {
+  y <- baseline + scale * (1:time) / time
+  return(y)
+}
