@@ -1,6 +1,8 @@
 
 # Track Covid-19 severity measures
 
+> **Archived.** No longer maintained; last updated July 2021.
+
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
